@@ -1,5 +1,6 @@
 import base64
-
+from w3af_api_client.utils.exceptions import (APIException,
+                                              ScanStopTimeoutException)
 
 class Traffic(object):
     """
@@ -15,6 +16,12 @@ class Traffic(object):
 
     def get_data(self):
         code, data = self.conn.send_request(self.traffic_href, method='GET')
+
+        if code != 200:
+            self.request = ""
+            self.response = ""
+            return
+            # raise APIException('Failed to retrieve urls')
 
         self.request = base64.b64decode(data['request'])
         self.response = base64.b64decode(data['response'])

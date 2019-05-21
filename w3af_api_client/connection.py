@@ -25,9 +25,11 @@ from w3af_api_client.utils.exceptions import (APIException,
 
 api_logger = logging.getLogger(__name__)
 
+# API_EXCEPTIONS = {400: BadRequestException,
+#                   403: ForbiddenException,
+#                   404: NotFoundException}
 API_EXCEPTIONS = {400: BadRequestException,
-                  403: ForbiddenException,
-                  404: NotFoundException}
+                  403: ForbiddenException}
 
 
 class Connection(object):
@@ -100,6 +102,7 @@ class Connection(object):
         self.session.verify = verify
 
         headers = {'Content-Type': 'application/json',
+                   'Authorization': 'Basic YWRtaW46am9objMyMQ==',
                    'Accept': 'application/json',
                    'User-Agent': 'REST API Client %s' % __VERSION__}
         self.session.headers.update(headers)
